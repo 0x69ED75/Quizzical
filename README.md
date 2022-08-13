@@ -19,3 +19,11 @@ After answering the questions you can submit your answers, and your score is dis
 - HTML 
 - CSS
 - React
+
+## Screenshots:
+### Main Menu:
+<img src = "https://cdn.upload.systems/uploads/qCLEJdxc.png">
+### Quiz Screen:
+<img src = "https://cdn.upload.systems/uploads/3dkvAZqz.png">
+### Game Over Screen:
+<img src = "https://cdn.upload.systems/uploads/c2pZzOU3.png">
