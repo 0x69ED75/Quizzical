@@ -3,6 +3,7 @@ import './style.css';
 import TitleScreen from "./Components/titleScreen"
 import QuestionMain from "./Components/questionMain"
 
+// TODO: fix being able to go to main menu and click play and get same q
 
 export default function App() {
     const [darkMode, setDarkMode] = React.useState(localStorage.getItem("darkMode") === "dark")
@@ -18,24 +19,25 @@ export default function App() {
     // this useEffect grabs questions and answers from an API, and then pushes them into an array, and setting this array to state, this state is passed to questionMain as props to be broken down into questions.
     React.useEffect(() => { // to create an async useEffect, must create async function inside useEffect and call it immediately
 
-        async function fetchData() { // fetching data from API. Returns an object containing question info.
-            const res = await fetch(difficulty)
-            return await res.json()
-        }
-
-        fetchData().then(response => { // once a response is received from the API:
-            let questionsarr = []
-            for(let i = 0; i< 5; i++){
-                questionsarr.push({
-                    questionNumber:i,
-                    questionText:response[i].question,
-                    correctAnswer:response[i].correctAnswer,
-                    incorrectAnswer:response[i].incorrectAnswers,
-                    allAnswers: shuffle([response[i].correctAnswer,response[i].incorrectAnswers[0],response[i].incorrectAnswers[1],response[i].incorrectAnswers[2]])
-                })
+            async function fetchData() { // fetching data from API. Returns an object containing question info.
+                const res = await fetch(difficulty)
+                return await res.json()
             }
-            setQuestions(questionsarr)
-        });
+
+            fetchData().then(response => { // once a response is received from the API:
+                let questionsarr = []
+                for (let i = 0; i < 5; i++) {
+                    console.log(response[i].difficulty)
+                    questionsarr.push({
+                        questionNumber: i,
+                        questionText: response[i].question,
+                        correctAnswer: response[i].correctAnswer,
+                        incorrectAnswer: response[i].incorrectAnswers,
+                        allAnswers: shuffle([response[i].correctAnswer, response[i].incorrectAnswers[0], response[i].incorrectAnswers[1], response[i].incorrectAnswers[2]])
+                    })
+                }
+                setQuestions(questionsarr)
+            });
     }, [playAgain,difficulty]); // putting playAgain as a dependency to gen new questions when the user wishes to play again. Also difficulty should be a dependency to gen new questions when difficulty is changed.
 
     // handles setting dark mode by setting background color property of the DOM body
@@ -91,6 +93,12 @@ export default function App() {
         }
     }
 
+    // this function handles returning the user to the main menu. It also silently generates new questions in the background, so if the user wishes to play again there is new questions.
+    function returnToMainMenu(){
+        setGameStart(false)
+        setPlayagain(prevState => !prevState) // causes refresh of this component, causing useEffect to generate new questions
+    }
+
 
 return(
     <div>
@@ -106,7 +114,7 @@ return(
                         <QuestionMain questions={questions}
                                       resetGame={setPlayagain}
                                       darkmode={darkMode}
-                                      returnMenu={() => setGameStart(false)}
+                                      returnMenu={() => {returnToMainMenu()}}
                         />
                     </div>
             }

@@ -86,6 +86,14 @@ export default function QuestionMain(props) {
         props.resetGame(prevResetGame => !prevResetGame)
     }
 
+    //TODO: could combine this into function with above
+    function returnToMenu(){
+        setSelectedAnswers([])
+        setScore(0)
+        setGameEnd(false)
+        props.returnMenu()
+    }
+
         return (
             <div className="questionScreen">
                 {
@@ -97,7 +105,7 @@ export default function QuestionMain(props) {
                         </div>
                         :
                         <div className="endGame">
-                            <EndScreen score={score} playAgain={playAgain} returnToMenu={props.returnMenu}/>
+                            <EndScreen score={score} playAgain={playAgain} returnToMenu={returnToMenu} />
                         </div>
                 }
             </div>
