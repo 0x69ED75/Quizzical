@@ -5,6 +5,7 @@ import QuestionMain from "./Components/questionMain"
 
 
 export default function App() {
+    const [darkMode, setDarkMode] = React.useState(localStorage.getItem("darkMode") === "dark")
     const [difficulty, setDifficulty] = React.useState("https://the-trivia-api.com/api/questions?limit=5&region=GB&difficulty=medium")
     const [playAgain,setPlayagain] = React.useState(false)
     const [gameStart, setGameStart]= React.useState(false)
@@ -37,6 +38,20 @@ export default function App() {
         });
     }, [playAgain,difficulty]); // putting playAgain as a dependency to gen new questions when the user wishes to play again. Also difficulty should be a dependency to gen new questions when difficulty is changed.
 
+    // handles setting dark mode by setting background color property of the DOM body
+    React.useEffect(() => {
+
+        if(darkMode){
+            document.body.style.backgroundColor = "#000000";
+            document.getElementById('main').style.color = "#7681d0";
+        }
+        else{
+            document.body.style.backgroundColor = "#F5F5F5";
+            document.getElementById('main').style.color = "#293264";
+        }
+
+    }, [darkMode]);
+
     // a function which shuffles any array given to it. I use this to shuffle the selection of answers into a random order.
     function shuffle(a) {
         var j, x, i;
@@ -61,16 +76,38 @@ export default function App() {
         }
     }
 
+    /* This function handles dark mode in localstorage, so that users preferences are remembered between sessions
+        It also handles setting the state darkMode to the appropriate value.
+        It is passed as props to titleScreen
+     */
+    function setMemoryDarkMode(){
+        if(localStorage.getItem("darkMode") === "dark"){
+            localStorage.setItem("darkMode","light")
+            setDarkMode(false)
+        }
+        else{
+            localStorage.setItem("darkMode","dark")
+            setDarkMode(true)
+        }
+    }
+
+
 return(
     <div>
-        <main>
+        <main id="main">
             {
                 !gameStart
                     ?
-                    <TitleScreen  difficultySelection={(difficultySelect) => difficultySelection(difficultySelect)} handleClick={() => {setGameStart(true)}}/>
+                    <TitleScreen difficultySelection={(difficultySelect) => difficultySelection(difficultySelect)} handleClick={() => {setGameStart(true)}}
+                                 handleDark={() => {setMemoryDarkMode()}}
+                    />
                     :
                     <div className="questionContainer">
-                        <QuestionMain questions={questions} resetGame={setPlayagain}/>
+                        <QuestionMain questions={questions}
+                                      resetGame={setPlayagain}
+                                      darkmode={darkMode}
+                                      returnMenu={() => setGameStart(false)}
+                        />
                     </div>
             }
         </main>

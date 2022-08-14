@@ -42,12 +42,11 @@ export default function TitleScreen(props) {
                     :
                     <div className="Settings">
                         <h1>Settings</h1>
-                        <h3>There are more settings coming soon!</h3>
                         <button style={{background: "#d51e1e"}} onClick={() => resetScores() }>Reset Scores</button>
+                        <button style={{background: "#2e2b2b"}} onClick={() => props.handleDark()}>Dark Mode</button>
                         <button style={{background: "#13d763"}} onClick={() => setToggleSettings(false)}>Main Menu</button>
                     </div>
             }
-
 
         </div>
     )

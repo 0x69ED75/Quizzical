@@ -34,6 +34,7 @@ export default function QuestionMain(props) {
         - Handle Highlight / remove Highlight are functions which either remove or add selected answers to the selectedAnswers state array.
      */
     const questionContents = props.questions.map(Question => <QuestionContent
+        darkmode={props.darkmode}
         key = {nanoid()}
         questionText={Question.questionText}
         allAnswers ={Question.allAnswers}
@@ -92,11 +93,11 @@ export default function QuestionMain(props) {
                         ?
                         <div className="questionContainer">
                             {questionContents}
-                            <button onClick={endGame} className="dynamicAnswerButton">Submit</button>
+                            <button onClick={endGame} className="dynamicAnswerButton" >Submit</button>
                         </div>
                         :
                         <div className="endGame">
-                            <EndScreen score={score} playAgain={playAgain}/>
+                            <EndScreen score={score} playAgain={playAgain} returnToMenu={props.returnMenu}/>
                         </div>
                 }
             </div>

@@ -12,6 +12,7 @@ export default function QuestionContent(props) {
     * Selected: states whether this answer has been selected.
     * highlightAnswer: a conditional which either runs a function which selects an element or deselects it.*/
     const answerValues = props.allAnswers.map(answer => <AnswerButtons
+        darkmode={props.darkmode}
         answerValue = {answer}
         isCorrect = {answer === props.correctAnswer}
         selected = {props.selectedAnswers.includes(answer)}
