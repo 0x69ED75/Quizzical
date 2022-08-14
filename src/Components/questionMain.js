@@ -16,6 +16,8 @@ export default function QuestionMain(props) {
     const [selectedAnswers, setSelectedAnswers] = React.useState([])
     const [score,setScore] = React.useState(0)
     const [gameEnd,setGameEnd] = React.useState(false)
+    const [correctAns,setCorrectAns] = React.useState([])
+
 
     /* useEffect runs everytime gameEnd changes, as a side effect. I can't just call manageLocalStorage in the endGame function since react state setting is asynchronous.
         This meant that within the endGame function, the state change wasn't being reflected until that function was over and another called.
@@ -62,12 +64,12 @@ export default function QuestionMain(props) {
                 setScore(prevState => prevState +1);
             }
         })
+        setCorrectAns(correctAnswers)
         setGameEnd(true)
     }
     // this function manages the local storage of scores and average scores.
     function manageLocalStorage(){
         // Managing local storage scores:
-        console.log(score)
         let old = localStorage.getItem("scores");
         if(old === null) localStorage.setItem("scores", ""+ score)
         else localStorage.setItem("scores", old + "," + score)
@@ -105,7 +107,13 @@ export default function QuestionMain(props) {
                         </div>
                         :
                         <div className="endGame">
-                            <EndScreen score={score} playAgain={playAgain} returnToMenu={returnToMenu} />
+                            <EndScreen score={score}
+                                       playAgain={playAgain}
+                                       returnToMenu={returnToMenu}
+                                       selectedAnswers={selectedAnswers}
+                                       correctAnswers={correctAns}
+                                       questions = {props.questions}
+                            />
                         </div>
                 }
             </div>

@@ -28,7 +28,7 @@ main{
     color:#293264
 }
 
-.startButton, .endGame > button ,.SettingsButton > button, .Settings > button{
+.startButton, .endGame > button ,.SettingsButton > button, .Settings > button, .showAnswers > button{
     margin: 25px auto;
     display: block;
     background: #4D5B9E;
@@ -89,5 +89,3 @@ button:active{
     font-size: 20px;
     gap:20px
 }
-
-
