@@ -9,11 +9,24 @@ This function manages everything to do with questions and their answers such as:
 import React from "react"
 import {nanoid} from "nanoid"
 import QuestionContent from "./questionContent";
+import EndScreen from "./endScreen"
+
 export default function QuestionMain(props) {
 
     const [selectedAnswers, setSelectedAnswers] = React.useState([])
     const [score,setScore] = React.useState(0)
     const [gameEnd,setGameEnd] = React.useState(false)
+
+    /* useEffect runs everytime gameEnd changes, as a side effect. I can't just call manageLocalStorage in the endGame function since react state setting is asynchronous.
+        This meant that within the endGame function, the state change wasn't being reflected until that function was over and another called.
+        There was no other best place to put this than in a useEffect, as other candidates for good places to run this function had unintended side effects.*/
+    React.useEffect(() => {
+
+        if(gameEnd){ // must check if gameEnd is true, since otherwise this function will run twice, once in gameEnd and once again in playAgain, giving two copies of the users score.
+            manageLocalStorage()
+        }
+
+    }, [gameEnd]);
 
 
     /* Mapping each question to the QuestionContent element, which is given a range of props.
@@ -41,6 +54,7 @@ export default function QuestionMain(props) {
 
     // Managing endGame rules, gathers an array of the correct answers, comparing these to the incorrect answers.
     function endGame(value){
+
         let correctAnswers = props.questions.map(Question => Question.correctAnswer) // mapping each question correct question to a new array
         selectedAnswers.forEach(answer =>{
             if(correctAnswers.includes(answer)){
@@ -48,6 +62,18 @@ export default function QuestionMain(props) {
             }
         })
         setGameEnd(true)
+    }
+    // this function manages the local storage of scores and average scores.
+    function manageLocalStorage(){
+        // Managing local storage scores:
+        console.log(score)
+        let old = localStorage.getItem("scores");
+        if(old === null) localStorage.setItem("scores", ""+ score)
+        else localStorage.setItem("scores", old + "," + score)
+        // calculating average score
+        let scoreArr = localStorage.getItem("scores").split(",").map(item => Number.parseInt(item));
+        let avg = Math.round(scoreArr.reduce((a, b) => a + b, 0) / scoreArr.length);
+        localStorage.setItem("averageScore",""+avg)
     }
 
 
@@ -70,10 +96,7 @@ export default function QuestionMain(props) {
                         </div>
                         :
                         <div className="endGame">
-                            <h1>Congratulations!</h1>
-                            <h2>Your score was: {score}</h2>
-                            <h3>How abouts you try again?</h3>
-                            <button onClick={playAgain}>Play Again!</button>
+                            <EndScreen score={score} playAgain={playAgain}/>
                         </div>
                 }
             </div>

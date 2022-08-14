@@ -5,6 +5,7 @@ import QuestionMain from "./Components/questionMain"
 
 
 export default function App() {
+    const [difficulty, setDifficulty] = React.useState("https://the-trivia-api.com/api/questions?limit=5&region=GB&difficulty=medium")
     const [playAgain,setPlayagain] = React.useState(false)
     const [gameStart, setGameStart]= React.useState(false)
     const [questions,setQuestions] = React.useState([{
@@ -13,11 +14,11 @@ export default function App() {
         incorrectAnswer:""
     }])
 
-    // this useEffect grabs questions and answers from an API, and then pushes them into an array, setting this array to state, this state is passed to questionMain as props to be broken down into questions.
+    // this useEffect grabs questions and answers from an API, and then pushes them into an array, and setting this array to state, this state is passed to questionMain as props to be broken down into questions.
     React.useEffect(() => { // to create an async useEffect, must create async function inside useEffect and call it immediately
 
         async function fetchData() { // fetching data from API. Returns an object containing question info.
-            const res = await fetch("https://the-trivia-api.com/api/questions?limit=5&region=GB&difficulty=medium")
+            const res = await fetch(difficulty)
             return await res.json()
         }
 
@@ -34,7 +35,7 @@ export default function App() {
             }
             setQuestions(questionsarr)
         });
-    }, [playAgain]); // putting playAgain as a dependency to gen new questions when the user wishes to play again.
+    }, [playAgain,difficulty]); // putting playAgain as a dependency to gen new questions when the user wishes to play again. Also difficulty should be a dependency to gen new questions when difficulty is changed.
 
     // a function which shuffles any array given to it. I use this to shuffle the selection of answers into a random order.
     function shuffle(a) {
@@ -48,13 +49,25 @@ export default function App() {
         return a;
     }
 
+    // handles the difficulty of the questions chosen by user. defaults to medium if a difficult is not chosen. This function is passed through props to title screen.
+    function difficultySelection(difficultySelect){
+        if(difficultySelect === "easy"){
+            console.log("difficulty set: Easy")
+            setDifficulty("https://the-trivia-api.com/api/questions?limit=5&difficulty=easy")
+        }
+        else if(difficultySelect === "hard"){
+            console.log("difficulty set: Hard")
+            setDifficulty("https://the-trivia-api.com/api/questions?limit=5&difficulty=hard")
+        }
+    }
+
 return(
     <div>
         <main>
             {
                 !gameStart
                     ?
-                    <TitleScreen handleClick={() => {setGameStart(true)}}/>
+                    <TitleScreen  difficultySelection={(difficultySelect) => difficultySelection(difficultySelect)} handleClick={() => {setGameStart(true)}}/>
                     :
                     <div className="questionContainer">
                         <QuestionMain questions={questions} resetGame={setPlayagain}/>

@@ -11,7 +11,7 @@ body {
 
 main{
     padding:10px;
-    margin:auto;
+    margin: 20px auto;
     width: 50%;
     height: 650px;
     max-width: 800px;
@@ -23,7 +23,10 @@ main{
     text-align: center;
     color:#293264
 }
-.startButton, .endGame > button{
+
+.startButton, .endGame > button ,.SettingsButton > button, .Settings > button{
+    margin: 25px auto;
+    display: block;
     background: #4D5B9E;
     width:200px;
     height:52px;
@@ -31,7 +34,8 @@ main{
     color: white;
     font-size: 20px;
 }
-.startButton:active{
+
+button:active{
     box-shadow: inset 10px 10px 10px -3px rgba(0, 0, 0, 0.7);
 }
 
@@ -53,6 +57,7 @@ main{
     display:inline-block;
     margin-right: 10px;
 }
+
 .questionButtons >button:hover{
     background-color: #ece932;
     color:white;
@@ -62,13 +67,23 @@ main{
     padding:10px;
     margin: 10px auto auto;
     display: flex;
-    flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    text-align: center;
     width: 120px;
     height: 35px;
     background: #4D5B9E;
     border-radius: 10px;
     color:white;
 }
+
+.difficultyButton{
+    margin-right: 20px;
+    width:150px;
+    height:40px;
+    border-radius: 15px;
+    color: white;
+    font-size: 20px;
+    gap:20px
+}
+
+
