@@ -10,7 +10,6 @@ After answering the questions you can submit your answers, and your score is dis
 
 ## Current TODO:
 - Add a feature allowing the user to choose the topic of questions.
-- Make a better end game screen, and attempt to put which questions the user got correct and which they got incorrect
 - Improve the CSS styling on answer buttons so that they have better styling when the answer exceeds 2 lines of text.
 - Improve play again feature, currently uses a hack solution to reload the main application, which causes it to not run as expected.
 
@@ -26,3 +25,7 @@ After answering the questions you can submit your answers, and your score is dis
 <img src = "https://cdn.upload.systems/uploads/3dkvAZqz.png">
 ### Game Over Screen:
 <img src = "https://cdn.upload.systems/uploads/4T7UcykP.png">
+### Results Screen:
+<img src = "https://cdn.upload.systems/uploads/gO3w05mo.png">
+### Settings Screen:
+<img src = "https://cdn.upload.systems/uploads/AKAD1xfC.png">
