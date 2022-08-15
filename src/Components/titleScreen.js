@@ -17,19 +17,44 @@ export default function TitleScreen(props) {
                     <div className="welcomeScreen">
                         <h1>Quizzical</h1>
                         <h3>A quiz game with new questions each time you play!</h3>
-                        <h3>Choose a difficulty below, or just press play now to play at normal difficulty.</h3>
-                        <button onClick={() => props.difficultySelection("easy")} style={{background: "#2ccc88"}}
-                                className="difficultyButton">Easy
-                        </button>
-                        <button onClick={() => props.difficultySelection("hard")} style={{background: "#c81240"}}
-                                className="difficultyButton">Extreme
-                        </button>
-                        <button className="startButton" onClick={props.handleClick}>Play Now!</button>
+                        <h3>Choose a difficulty below</h3>
+
+                        <div className="questionTypeButtons">
+                            <button onClick={() => props.triviaCategorySelection("easy")} style={{background: "#2ccc88"}}
+                                    className="difficultySelectButtons">Easy
+                            </button>
+
+                            <button onClick={() => props.triviaCategorySelection("medium")} style={{background: "#de862b"}}
+                                    className="difficultySelectButtons">Medium
+                            </button>
+
+                            <button onClick={() => props.triviaCategorySelection("hard")} style={{background: "#c81240"}}
+                                    className="difficultySelectButtons">Extreme
+                            </button>
+
+                            <h3>Or, play from one of the following preselected categories!</h3>
+                            <button onClick={() => props.triviaCategorySelection("80's Trivia")} style={{background: "#de16db"}}
+                                    className="difficultySelectButtons">80's Trivia
+                            </button>
+
+                            <button onClick={() => props.triviaCategorySelection("Sport")} style={{background: "rgb(61,171,178)"}}
+                                    className="difficultySelectButtons">Sport
+                            </button>
+
+                            <button onClick={() => props.triviaCategorySelection("Music")} style={{background: "rgba(142,22,222,0.87)"}}
+                                    className="difficultySelectButtons">Music
+                            </button>
+
+                            <button onClick={() => props.triviaCategorySelection("Film")} style={{background: "rgb(34,36,53)"}}
+                                    className="difficultySelectButtons">Film & TV
+                            </button>
+
+                        </div>
+
 
                         <div className="Scores">
                             {!localStorage.getItem("averageScore")
                                 && <h3>After you play, your average score will be here!</h3>}
-
                             {localStorage.getItem("averageScore")
                                 && <h3>Average Score: {localStorage.getItem("averageScore")}</h3>}
                         </div>

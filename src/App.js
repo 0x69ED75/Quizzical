@@ -7,7 +7,7 @@ import QuestionMain from "./Components/questionMain"
 
 export default function App() {
     const [darkMode, setDarkMode] = React.useState(localStorage.getItem("darkMode") === "dark")
-    const [difficulty, setDifficulty] = React.useState("https://the-trivia-api.com/api/questions?limit=5&region=GB&difficulty=medium")
+    const [triviaCategory, setTriviaCategory] = React.useState("")
     const [playAgain,setPlayagain] = React.useState(false)
     const [gameStart, setGameStart]= React.useState(false)
     const [questions,setQuestions] = React.useState([{
@@ -20,25 +20,26 @@ export default function App() {
     React.useEffect(() => { // to create an async useEffect, must create async function inside useEffect and call it immediately
 
             async function fetchData() { // fetching data from API. Returns an object containing question info.
-                const res = await fetch(difficulty)
+                const res = await fetch(triviaCategory)
                 return await res.json()
             }
-
-            fetchData().then(response => { // once a response is received from the API:
+            fetchData().then(APIResponse => { // once a response is received from the API:
                 let questionsarr = []
                 for (let i = 0; i < 5; i++) {
-                    console.log(response[i].difficulty)
+                    console.log(APIResponse[i].difficulty)
+                    console.log(APIResponse[i].tags)
                     questionsarr.push({
                         questionNumber: i,
-                        questionText: response[i].question,
-                        correctAnswer: response[i].correctAnswer,
-                        incorrectAnswer: response[i].incorrectAnswers,
-                        allAnswers: shuffle([response[i].correctAnswer, response[i].incorrectAnswers[0], response[i].incorrectAnswers[1], response[i].incorrectAnswers[2]])
+                        questionText: APIResponse[i].question,
+                        correctAnswer: APIResponse[i].correctAnswer,
+                        incorrectAnswer: APIResponse[i].incorrectAnswers,
+                        allAnswers: shuffle([APIResponse[i].correctAnswer, APIResponse[i].incorrectAnswers[0], APIResponse[i].incorrectAnswers[1], APIResponse[i].incorrectAnswers[2]])
                     })
                 }
                 setQuestions(questionsarr)
+                setGameStart(true) // starting the game after the questions are fetched from the API.
             });
-    }, [playAgain,difficulty]); // putting playAgain as a dependency to gen new questions when the user wishes to play again. Also difficulty should be a dependency to gen new questions when difficulty is changed.
+    }, [playAgain,triviaCategory]); // putting playAgain as a dependency to gen new questions when the user wishes to play again. Also triviaCategory should be a dependency to gen new questions when triviaCategory is changed.
 
     // handles setting dark mode by setting background color property of the DOM body
     React.useEffect(() => {
@@ -66,15 +67,37 @@ export default function App() {
         return a;
     }
 
-    // handles the difficulty of the questions chosen by user. defaults to medium if a difficult is not chosen. This function is passed through props to title screen.
-    function difficultySelection(difficultySelect){
-        if(difficultySelect === "easy"){
-            console.log("difficulty set: Easy")
-            setDifficulty("https://the-trivia-api.com/api/questions?limit=5&difficulty=easy")
-        }
-        else if(difficultySelect === "hard"){
-            console.log("difficulty set: Hard")
-            setDifficulty("https://the-trivia-api.com/api/questions?limit=5&difficulty=hard")
+    // handles the triviaCategory of the questions chosen by user. defaults to medium if nothing is chosen. This function is passed through props to title screen.
+    function triviaCategorySelection(triviaCategory){
+        switch(triviaCategory) {
+            case "easy":
+                console.log("trivia Category set: Easy")
+                setTriviaCategory("https://the-trivia-api.com/api/questions?limit=5&difficulty=easy")
+                break;
+            case "medium":
+                console.log("trivia Category set: Medium")
+                setTriviaCategory("https://the-trivia-api.com/api/questions?limit=5&region=GB&difficulty=medium")
+                break;
+            case "hard":
+                console.log("trivia Category set: Hard")
+                setTriviaCategory("https://the-trivia-api.com/api/questions?limit=5&difficulty=hard")
+                break;
+            case "80's Trivia":
+                console.log("trivia Category set: 80's Trivia")
+                setTriviaCategory("https://the-trivia-api.com/api/questions?limit=5&tags=1980's")
+                break;
+            case "Music":
+                console.log("trivia Category set: 80's Trivia")
+                setTriviaCategory("https://the-trivia-api.com/api/questions?categories=music&limit=5")
+                break;
+            case "Film":
+                console.log("trivia Category set: 80's Trivia")
+                setTriviaCategory("https://the-trivia-api.com/api/questions?categories=film_and_tv&limit=5")
+                break;
+            case "Sport":
+                console.log("trivia Category set: 80's Trivia")
+                setTriviaCategory("https://the-trivia-api.com/api/questions?categories=sport_and_leisure&limit=5")
+                break;
         }
     }
 
@@ -106,7 +129,7 @@ return(
             {
                 !gameStart
                     ?
-                    <TitleScreen difficultySelection={(difficultySelect) => difficultySelection(difficultySelect)} handleClick={() => {setGameStart(true)}}
+                    <TitleScreen triviaCategorySelection={(triviaCategory) => triviaCategorySelection(triviaCategory)}
                                  handleDark={() => {setMemoryDarkMode()}}
                     />
                     :

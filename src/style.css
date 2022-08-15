@@ -80,7 +80,7 @@ button:active{
     color:white;
 }
 
-.difficultyButton{
+.triviaSelectButtons, .difficultySelectButtons{
     margin-right: 20px;
     width:150px;
     height:40px;
