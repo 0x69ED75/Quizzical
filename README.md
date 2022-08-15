@@ -9,7 +9,6 @@ The source code is also commented to explain how everything works.
 After answering the questions you can submit your answers, and your score is displayed, and your average score is tracked.
 
 ## Current TODO:
-- Add a feature allowing the user to choose the topic of questions.
 - Improve the CSS styling on answer buttons so that they have better styling when the answer exceeds 2 lines of text.
 - Improve play again feature, currently uses a hack solution to reload the main application, which causes it to not run as expected.
 
