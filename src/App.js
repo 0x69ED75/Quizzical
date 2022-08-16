@@ -3,12 +3,10 @@ import './style.css';
 import TitleScreen from "./Components/titleScreen"
 import QuestionMain from "./Components/questionMain"
 
-// TODO: fix being able to go to main menu and click play and get same q
-
 export default function App() {
     const [darkMode, setDarkMode] = React.useState(localStorage.getItem("darkMode") === "dark")
-    const [triviaCategory, setTriviaCategory] = React.useState("")
-    const [playAgain,setPlayagain] = React.useState(false)
+    const [triviaCategory, setTriviaCategory] = React.useState()
+    const [playAgain,setPlayagain] = React.useState(true)
     const [gameStart, setGameStart]= React.useState(false)
     const [questions,setQuestions] = React.useState([{
         questionText:"",
@@ -18,8 +16,7 @@ export default function App() {
 
     // this useEffect grabs questions and answers from an API, and then pushes them into an array, and setting this array to state, this state is passed to questionMain as props to be broken down into questions.
     React.useEffect(() => { // to create an async useEffect, must create async function inside useEffect and call it immediately
-
-            async function fetchData() { // fetching data from API. Returns an object containing question info.
+        async function fetchData() { // fetching data from API. Returns an object containing question info.
                 const res = await fetch(triviaCategory)
                 return await res.json()
             }
@@ -37,7 +34,7 @@ export default function App() {
                     })
                 }
                 setQuestions(questionsarr)
-                setGameStart(true) // starting the game after the questions are fetched from the API.
+                playAgain ? setGameStart(true) : setGameStart(false) // game will not start if playAgain is false. This covers instances where new questions were generated in the background, but we dont necessarily want to start yet.
             });
     }, [playAgain,triviaCategory]); // putting playAgain as a dependency to gen new questions when the user wishes to play again. Also triviaCategory should be a dependency to gen new questions when triviaCategory is changed.
 
@@ -57,7 +54,7 @@ export default function App() {
 
     // a function which shuffles any array given to it. I use this to shuffle the selection of answers into a random order.
     function shuffle(a) {
-        var j, x, i;
+        let j, x, i;
         for (i = a.length - 1; i > 0; i--) {
             j = Math.floor(Math.random() * (i + 1));
             x = a[i];
@@ -99,6 +96,7 @@ export default function App() {
                 setTriviaCategory("https://the-trivia-api.com/api/questions?categories=sport_and_leisure&limit=5")
                 break;
         }
+        setPlayagain(true)
     }
 
     /* This function handles dark mode in localstorage, so that users preferences are remembered between sessions
@@ -119,7 +117,7 @@ export default function App() {
     // this function handles returning the user to the main menu. It also silently generates new questions in the background, so if the user wishes to play again there is new questions.
     function returnToMainMenu(){
         setGameStart(false)
-        setPlayagain(prevState => !prevState) // causes refresh of this component, causing useEffect to generate new questions
+        setPlayagain(prevState => !prevState) // causes refresh of this component, causing useEffect to generate new questions, being set to false stops the game from immediately starting when new questions are generated.
     }
 
 
