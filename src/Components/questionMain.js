@@ -13,7 +13,7 @@ import EndScreen from "./endScreen"
 
 export default function QuestionMain(props) {
 
-    const [selectedAnswers, setSelectedAnswers] = React.useState([])
+    const [selectedAnswers, setSelectedAnswers] = React.useState({})
     const [score,setScore] = React.useState(0)
     const [gameEnd,setGameEnd] = React.useState(false)
     const [correctAns,setCorrectAns] = React.useState([])
@@ -33,7 +33,7 @@ export default function QuestionMain(props) {
 
     /* Mapping each question to the QuestionContent element, which is given a range of props.
         - selectedAnswers is an array of answers the users has selected, stored in state. It has a limit of 5.
-        - Handle Highlight / remove Highlight are functions which either remove or add selected answers to the selectedAnswers state array.
+        - Handle Highlight / remove Highlight are functions which either remove or add selected answers to the selectedAnswers state object.
      */
     const questionContents = props.questions.map(Question => <QuestionContent
         darkmode={props.darkmode}
@@ -41,29 +41,26 @@ export default function QuestionMain(props) {
         questionText={Question.questionText}
         allAnswers ={Question.allAnswers}
         handleHighlight = {handleHighlight}
-        removeHighlight = {removeHighlight}
         selectedAnswers={selectedAnswers}
     />)
 
-    function handleHighlight(value){
-        if(selectedAnswers.length < 5) {
-            setSelectedAnswers(oldSelectedAnswers => [...oldSelectedAnswers, value])
-        }
+
+    // stores the selected answers in state for each question by updating the state object with the questionText as a key, and the chosen answer as the value.
+    function handleHighlight(chosenAnswer,questionText){
+        setSelectedAnswers(prevState => ({...prevState, [questionText]: chosenAnswer }));
     }
 
-    function removeHighlight(value){
-        setSelectedAnswers(prevState => prevState.filter(answer => answer !== value))
-    }
 
     // Managing endGame rules, gathers an array of the correct answers, comparing these to the incorrect answers.
     function endGame(value){
 
-        let correctAnswers = props.questions.map(Question => Question.correctAnswer) // mapping each question correct question to a new array
-        selectedAnswers.forEach(answer =>{
-            if(correctAnswers.includes(answer)){
-                setScore(prevState => prevState +1);
+        // going through each question, checking if the answer in each question matches that given by the user.
+        props.questions.forEach(Question =>{
+            if(selectedAnswers[Question.questionText] === Question.correctAnswer){ // accessing the selectAnswers object, using the current iterated questions text as key, then checking if this matches the correct answer.
+                setScore(prevScore => prevScore + 1)
             }
         })
+        let correctAnswers = props.questions.map(Question => Question.correctAnswer) // mapping each question correct question to a new array
         setCorrectAns(correctAnswers)
         setGameEnd(true)
     }

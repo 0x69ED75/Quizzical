@@ -1,5 +1,4 @@
 import React from "react"
-import QuestionContent from "./questionContent";
 import {nanoid} from "nanoid";
 import MarkSheet from "./markSheet";
 

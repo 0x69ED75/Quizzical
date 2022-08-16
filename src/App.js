@@ -14,7 +14,7 @@ export default function App() {
         incorrectAnswer:""
     }])
 
-    // this useEffect grabs questions and answers from an API, and then pushes them into an array, and setting this array to state, this state is passed to questionMain as props to be broken down into questions.
+    // this useEffect grabs questions and answers from an API, and then pushes them into an array, and sets this array to state, this state is passed to questionMain as props to be broken down into individual questions.
     React.useEffect(() => { // to create an async useEffect, must create async function inside useEffect and call it immediately
         async function fetchData() { // fetching data from API. Returns an object containing question info.
                 const res = await fetch(triviaCategory)
@@ -121,9 +121,9 @@ export default function App() {
     }
 
 /* "playAgain" is a very hack solution for calling the useEffect function to generate new questions, so the user can play again:
-    This useEffect has a dependency on triviaCategory, so  to easily call it again, I append a blank space to the end of the API url stored in state
+    This useEffect has a dependency on triviaCategory, so to easily call it again, I append a blank space to the end of the API url stored in state
     This technically updates state, so the useEffect runs again, but this space has no effect on the URl's ability to return information.
-    This is neither good practice or very readable, but, saves me from making another state dependency for another feature. There is probably a better way I am unaware of.
+    This is neither good practice or very readable, but, saves me from making another state dependency for a simple feature. There is probably a better way I am unaware of.
  */
 return(
     <div>

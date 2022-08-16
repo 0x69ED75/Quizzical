@@ -27,7 +27,7 @@ export default function AnswerButtons(props) {
 
     return (
         <button id="answerButton" style={styles}
-                onClick={function(){ props.highlightanswer(props.answerValue);}}
+                onClick={function(){ props.highlightanswer(props.answerValue,props.questionText);}}
         >{props.answerValue}</button>
     )
 }
