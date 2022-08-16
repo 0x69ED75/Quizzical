@@ -85,7 +85,7 @@ export default function QuestionMain(props) {
         setSelectedAnswers([])
         setScore(0)
         setGameEnd(false)
-        props.resetGame(prevResetGame => !prevResetGame)
+        props.playAgain()
     }
 
     //TODO: could combine this into function with above

@@ -120,7 +120,11 @@ export default function App() {
         setPlayagain(prevState => !prevState) // causes refresh of this component, causing useEffect to generate new questions, being set to false stops the game from immediately starting when new questions are generated.
     }
 
-
+/* "playAgain" is a very hack solution for calling the useEffect function to generate new questions, so the user can play again:
+    This useEffect has a dependency on triviaCategory, so  to easily call it again, I append a blank space to the end of the API url stored in state
+    This technically updates state, so the useEffect runs again, but this space has no effect on the URl's ability to return information.
+    This is neither good practice or very readable, but, saves me from making another state dependency for another feature. There is probably a better way I am unaware of.
+ */
 return(
     <div>
         <main id="main">
@@ -133,7 +137,7 @@ return(
                     :
                     <div className="questionContainer">
                         <QuestionMain questions={questions}
-                                      resetGame={setPlayagain}
+                                      playAgain={() => setTriviaCategory(triviaCategory +" ")}
                                       darkmode={darkMode}
                                       returnMenu={() => {returnToMainMenu()}}
                         />
