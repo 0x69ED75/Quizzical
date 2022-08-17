@@ -14,7 +14,7 @@ export default function App() {
         incorrectAnswer:""
     }])
 
-    // this useEffect grabs questions and answers from an API, and then pushes them into an array, and sets this array to state, this state is passed to questionMain as props to be broken down into individual questions.
+    // this useEffect grabs questions and answers from an API, and then pushes them into an array, then sets this array to state, this state is passed to questionMain as props to be broken down into individual questions.
     React.useEffect(() => { // to create an async useEffect, must create async function inside useEffect and call it immediately
         async function fetchData() { // fetching data from API. Returns an object containing question info.
                 const res = await fetch(triviaCategory)
@@ -38,7 +38,7 @@ export default function App() {
             });
     }, [playAgain,triviaCategory]); // putting playAgain as a dependency to gen new questions when the user wishes to play again. Also triviaCategory should be a dependency to gen new questions when triviaCategory is changed.
 
-    // handles setting dark mode by setting background color property of the DOM body
+    // handles setting dark mode by setting background color property of the DOM body and some font color changes
     React.useEffect(() => {
 
         if(darkMode){
@@ -95,6 +95,8 @@ export default function App() {
                 console.log("trivia Category set: 80's Trivia")
                 setTriviaCategory("https://the-trivia-api.com/api/questions?categories=sport_and_leisure&limit=5")
                 break;
+            default:
+                break;
         }
         setPlayagain(true)
     }
@@ -114,10 +116,10 @@ export default function App() {
         }
     }
 
-    // this function handles returning the user to the main menu. It also silently generates new questions in the background, so if the user wishes to play again there is new questions.
+    // this function handles returning the user to the main menu. It also silently generates new questions in the background
     function returnToMainMenu(){
         setGameStart(false)
-        setPlayagain(prevState => !prevState) // causes refresh of this component, causing useEffect to generate new questions, being set to false stops the game from immediately starting when new questions are generated.
+        setPlayagain(prevState => !prevState) // causes refresh of this component, causing useEffect to generate new questions,
     }
 
 /* "playAgain" is a very hack solution for calling the useEffect function to generate new questions, so the user can play again:
@@ -131,15 +133,17 @@ return(
             {
                 !gameStart
                     ?
-                    <TitleScreen triviaCategorySelection={(triviaCategory) => triviaCategorySelection(triviaCategory)}
-                                 handleDark={() => {setMemoryDarkMode()}}
+                    <TitleScreen
+                            triviaCategorySelection={(triviaCategory) => triviaCategorySelection(triviaCategory)}
+                            handleDark={() => {setMemoryDarkMode()}}
                     />
                     :
                     <div className="questionContainer">
-                        <QuestionMain questions={questions}
-                                      playAgain={() => setTriviaCategory(triviaCategory +" ")}
-                                      darkmode={darkMode}
-                                      returnMenu={() => {returnToMainMenu()}}
+                        <QuestionMain
+                                questions={questions}
+                                playAgain={() => setTriviaCategory(triviaCategory +" ")}
+                                darkmode={darkMode}
+                                returnMenu={() => {returnToMainMenu()}}
                         />
                     </div>
             }

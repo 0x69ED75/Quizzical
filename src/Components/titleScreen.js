@@ -1,9 +1,16 @@
+/* titleScreen handles any title screen html elements, as well as providing settings for the user to select from.
+    It also displays the users average scores, sourced from localstorage.
+    The settings screen is conditionally rendered on whether the toggleSettings state is true.
+    Furthermore, the settings conditional render includes a button which calls the handleDark function passed as props.
+*/
+
 import React from "react"
 
 export default function TitleScreen(props) {
 
-    const [toggleSettings, setToggleSettings] = React.useState(false)
+    const [toggleSettings, setToggleSettings] = React.useState(false) // handles conditional rendering of settings screen. Defaults to false.
 
+    //  The function reset scores can be called from one of the buttons in the settings screen, and resets the localstorage scores for the user.
      function resetScores(){
          localStorage.removeItem("averageScore")
          localStorage.removeItem("scores")

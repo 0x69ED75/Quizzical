@@ -10,7 +10,14 @@ body {
     background-color: #F5F5F5;
     font-family: 'Karla', sans-serif;
     margin-top: auto;
-    padding-top: 12vh; /* Decides how much space to put between the top of the screen and main. Super useful styling -- vh is view height, a unit of measurement useful for consistency across devices */
+    padding-top: 12vh;
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        background-color: lightblue;
+        padding-top: 18vh;
+    }
 }
 
 main{
@@ -19,7 +26,7 @@ main{
     width: 50%;
     height: 650px;
     max-width: 800px;
-    min-width: 400px;  /* this is a really good fix for the problem i was having for rendering on mobile devices. */
+    min-width: 400px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
