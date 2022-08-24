@@ -1,40 +1,18 @@
-* {
-    box-sizing: border-box;
-}
-
-.dark{
-    background-color: #1c1b1b;
-}
-
 body {
     background-color: #F5F5F5;
     font-family: 'Karla', sans-serif;
-    margin-top: auto;
-    padding-top: 12vh;
-}
-
-@media only screen and (max-width: 600px) {
-    body {
-        background-color: lightblue;
-        padding-top: 18vh;
-    }
-}
-
-main{
-    padding:10px;
-    margin: 20px auto;
-    width: 50%;
-    height: 650px;
-    max-width: 800px;
-    min-width: 400px;
+    margin: 1vh auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     text-align: center;
-    color:#293264
+    color:#293264;
 }
 
+.questions{
+    padding-top: 3vh;
+}
 .startButton, .endGame > button ,.SettingsButton > button, .Settings > button, .showAnswers > button{
     margin: 25px auto;
     display: block;
@@ -46,27 +24,25 @@ main{
     font-size: 20px;
 }
 
-button:active{
-    box-shadow: inset 10px 10px 10px -3px rgba(0, 0, 0, 0.7);
+.welcomeScreen, .endGame, .Settings{
+    margin-top: 20vh;
 }
 
-.questionScreen{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 110px;
+button:active{
+    box-shadow: inset 10px 10px 10px -3px rgba(0, 0, 0, 0.7);
 }
 
 .questions >h1{
     font-size: 19px;
 }
+
 .questionButtons >button{
+    margin-top: 1vh;
     background-color: #F5F5F5;
     width: 180px;
     min-height: 50px;
     border-radius: 10px;
-    display:inline-block;
-    margin-right: 10px;
+    margin-right: 1vh;
 }
 
 .questionButtons >button:hover{
@@ -74,12 +50,8 @@ button:active{
     color:white;
 }
 
-.dynamicAnswerButton{
-    padding:10px;
+.submitButton{
     margin: 10px auto auto;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
     width: 120px;
     height: 35px;
     background: #4D5B9E;
@@ -94,5 +66,20 @@ button:active{
     border-radius: 15px;
     color: white;
     font-size: 20px;
-    gap:20px
 }
+
+@media (max-width: 800px) {
+    .questionButtons{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .triviaSelectButtons, .difficultySelectButtons{
+        margin-top: 1vh;
+    }
+    .welcomeScreen{
+        margin-top: 0;
+    }
+}
+

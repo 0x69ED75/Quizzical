@@ -31,8 +31,8 @@ export default function EndScreen(props) {
                     <h2>Your score was: {props.score}</h2>
                     <h3>View the correct answers or play another game with the buttons below!</h3>
                     <button style={{background: "#091fdf"}} onClick={() => setViewAnswers(true)}>Correct Answers</button>
-                    <button style={{background: "#28c864"}} onClick={props.playAgain}>Play Again!</button>
-                    <button style={{background: "#c82860"}} onClick={props.returnToMenu}>Main Menu</button>
+                    <button style={{background: "#28c864"}} onClick={() => props.playAgain(true)}>Play Again!</button>
+                    <button style={{background: "#c82860"}} onClick={() => props.playAgain(false)}>Main Menu</button>
                 </div>
                 :
                 <div className="showAnswers">

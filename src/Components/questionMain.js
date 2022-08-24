@@ -52,7 +52,7 @@ export default function QuestionMain(props) {
 
 
     // Managing endGame rules, gathers an array of the correct answers, comparing these to the incorrect answers.
-    function endGame(value){
+    function endGame(){
 
         // going through each question, checking if the answer in each question matches that given by the user.
         props.questions.forEach(Question =>{
@@ -64,6 +64,7 @@ export default function QuestionMain(props) {
         setCorrectAns(correctAnswers)
         setGameEnd(true)
     }
+
     // this function manages the local storage of scores and average scores.
     function manageLocalStorage(){
         // Managing local storage scores:
@@ -78,19 +79,11 @@ export default function QuestionMain(props) {
 
 
     // A hack workaround to reset the game to its initial state by calling A state which exists in App.js, which therefore forces a refresh of this component
-    function playAgain(){
+    function playAgain(isPlayAgain){
         setSelectedAnswers([])
         setScore(0)
         setGameEnd(false)
-        props.playAgain()
-    }
-
-    //TODO: could combine this into function with above
-    function returnToMenu(){
-        setSelectedAnswers([])
-        setScore(0)
-        setGameEnd(false)
-        props.returnMenu()
+        isPlayAgain ? props.playAgain() : props.returnMenu()
     }
 
         return (
@@ -100,13 +93,12 @@ export default function QuestionMain(props) {
                         ?
                         <div className="questionContainer">
                             {questionContents}
-                            <button onClick={endGame} className="dynamicAnswerButton" >Submit</button>
+                            <button onClick={endGame} className="submitButton" >Submit</button>
                         </div>
                         :
-                        <div className="endGame">
+                        <div className="gameEnd">
                             <EndScreen score={score}
-                                       playAgain={playAgain}
-                                       returnToMenu={returnToMenu}
+                                       playAgain={(isPlayAgain) => playAgain(isPlayAgain)}
                                        selectedAnswers={selectedAnswers}
                                        correctAnswers={correctAns}
                                        questions = {props.questions}

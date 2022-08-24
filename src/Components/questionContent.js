@@ -26,14 +26,11 @@ export default function QuestionContent(props) {
 
 
     return (
-        <div className="questionScreen">
             <div className="questions">
                 <h1>{props.questionText}</h1>
                 <div className="questionButtons">
                     {answerValues}
                 </div>
-            </div>
-
         </div>
 
 
