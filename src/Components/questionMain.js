@@ -50,7 +50,6 @@ export default function QuestionMain(props) {
         setSelectedAnswers(prevState => ({...prevState, [questionText]: chosenAnswer }));
     }
 
-
     // Managing endGame rules, gathers an array of the correct answers, comparing these to the incorrect answers.
     function endGame(){
 

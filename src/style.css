@@ -24,6 +24,15 @@ body {
     font-size: 20px;
 }
 
+.congratulate > button{
+    display:inline-block;
+    width:200px;
+    height:52px;
+    border-radius: 15px;
+    margin-right: 1.5vw;
+    color: white;
+    font-size: 20px;
+}
 .welcomeScreen, .endGame, .Settings{
     margin-top: 20vh;
 }
@@ -66,6 +75,10 @@ button:active{
     border-radius: 15px;
     color: white;
     font-size: 20px;
+}
+
+.congratulate{
+    padding-bottom: 2vh;
 }
 
 @media (max-width: 800px) {

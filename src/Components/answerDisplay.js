@@ -1,5 +1,5 @@
 /*
-Marksheet is a React component responsible for giving an overview of the correct answer to a single question, as well as showing the user whether they got the question correct.
+answerDisplay is a React component responsible for giving an overview of the correct answer to a single question, as well as showing the user whether they got the question correct.
 A little more work needs to be done here than just simply display what is given since the props given are not adequate on their own to calculate which answer was selected for which question.
 This is because the Object representing all answers chosen are in the order of which they were chosen, not the same order in which questions are displayed.
     e.g. if you answered question 3 and then question 1, question 3 will sit at the top of the array.
@@ -7,7 +7,7 @@ It is possible to just find similarities between the answers the user chose and 
 Therefore, there is an useffect to find which answer was chosen for each question.
  */
 import React from "react"
-export default function MarkSheet(props) {
+export default function AnswerDisplay(props) {
 
     const [chosenAnswer,setChosenAnswer] = React.useState()
 
@@ -31,7 +31,7 @@ export default function MarkSheet(props) {
         color: chosenAnswer === props.correctAnswer ? "#35b935" : "#d83242"
     }
 
-    // Pretty standard JSX rendering, except one component's text is calculated via function "findChosenAnswer"
+    // Pretty standard JSX rendering, except one component's text is simply the state "chosenAnswer
     return (
         <div className="showAnswers">
             <h2 style={styles}>{props.questionText}</h2>
