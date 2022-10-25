@@ -1,6 +1,6 @@
 ## Quizzical - A quiz game made in React
 
-The game is playable at this URL: https://0x69ed75.github.io/Quizzical/
+The game is playable at this URL: https://0x978.github.io/Quizzical/
 
 This is my third React project, a quiz game which uses an API to generate new questions each time you play.
 
