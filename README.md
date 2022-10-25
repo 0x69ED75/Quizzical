@@ -23,11 +23,15 @@ After answering the questions you can submit your answers, and your score is dis
 ## Screenshots:
 ### Main Menu:
 <img src = "https://cdn.upload.systems/uploads/2bs67Ikp.png">
+
 ### Quiz Screen:
 <img src = "https://cdn.upload.systems/uploads/0lJLOxDC.png">
+
 ### Game Over Screen:
 <img src = "https://cdn.upload.systems/uploads/G2zVnfD2.png">
+
 ### Results Screen:
 <img src = "https://cdn.upload.systems/uploads/SgF7piM3.png">
+
 ### Settings Screen:
 <img src = "https://cdn.upload.systems/uploads/YS1BrjY0.png">
